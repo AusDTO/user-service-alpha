@@ -1,0 +1,16 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+  dbseed: 
+    build: ./seed
+    depends_on:
+      - db
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
