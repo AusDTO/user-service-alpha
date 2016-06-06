@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS users (
   password TEXT NOT NULL
 );
 
-INSERT INTO users (email, password) VALUES ('testuser@dto.gov.au', 'abc');
+INSERT INTO users (email, password) VALUES ('testuser@dto.gov.au', '$2a$10$vfN6rtYz9XWDoGVEFRx9fOVf39GIHjALBGzJhN5cidJhFAebcq85m'); -- pw = "password1"
