@@ -1,5 +1,8 @@
-FROM postgres
+FROM golang:latest
 
-COPY users.sql /users.sql
+ADD . /go/src/github.com/ausdto/user-seed
+WORKDIR /go/src/github.com/ausdto/user-seed
 
-CMD sleep 5 && psql -h db -U postgres -a -w -f /users.sql
+RUN go get
+RUN go build -o seed
+CMD sleep 5 && ./seed

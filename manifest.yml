@@ -1,0 +1,8 @@
+---
+applications:
+- memory: 64M
+  disk_quota: 256M
+  buildpack: https://github.com/cloudfoundry/binary-buildpack.git
+  stack: cflinuxfs2
+  services:
+    - user-service-db

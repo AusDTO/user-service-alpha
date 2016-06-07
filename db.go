@@ -1,6 +1,9 @@
 package main
 
 import (
+	"os"
+	"fmt"
+	"strings"
 	"database/sql"
 
 	_ "github.com/lib/pq"
@@ -12,7 +15,13 @@ type UserDB struct {
 
 func GetUserDB() (*UserDB, error) {
 	userDb := &UserDB{}
-	db, err := sql.Open("postgres", "postgres://postgres@db/test?sslmode=disable")
+	dbUrl := os.Getenv("DATABASE_URL")
+	if dbUrl == "" {
+		return userDb, fmt.Errorf("DATABASE_URL empty")
+	}
+	// some random reconnect thing on the end which breaks everything. GEt RID
+	dbUrl = strings.Replace(dbUrl, "reconnect=true", "", 1)
+	db, err := sql.Open("postgres", dbUrl)
 	if err != nil {
 		return userDb, err
 	}
