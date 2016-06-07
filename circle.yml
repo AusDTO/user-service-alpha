@@ -5,7 +5,7 @@ machine:
 dependencies:
   override:
     - go get -t -d -v ./...
-    - GOOS=linux GOARCH=386 go build -o app
+    - GOOS=linux GOARCH=386 go build -o user-service
 
 test:
   pre:
