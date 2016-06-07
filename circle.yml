@@ -1,0 +1,29 @@
+machine:
+  environment:
+    APP_NAME: user-service
+
+dependencies:
+  override:
+    - go get -t -d -v ./...
+    - GOOS=linux GOARCH=386 go build -o app
+
+test:
+  pre:
+    - go vet ./...
+
+  override:
+    - go test ./...
+
+deployment:
+  staging:
+    branch: /.*/
+    commands:
+    # Install Cloud Foundry command line client for deployment
+      - "curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&version=6.17.0&source=github'"
+      - sudo dpkg -i cf-cli_amd64.deb
+      - cf -v
+      - cf api $CF_API_DEV --skip-ssl-validation &> /dev/null
+      - cf auth $CF_USER_DEV $CF_PASSWORD_DEV &> /dev/null
+      - cf target -o $CF_ORG_DEV &> /dev/null
+      - cf target -s $CF_SPACE_DEV &> /dev/null
+      - cf push $APP_NAME &> /dev/null
