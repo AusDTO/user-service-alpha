@@ -1,7 +1,5 @@
-DROP DATABASE IF EXISTS test;
-CREATE DATABASE test;
-
-\connect test
+-- This file should only be run when setting up your local dev environment.
+-- DO NOT RUN THIS FILE IN PRODUCTION
 
 CREATE TABLE IF NOT EXISTS users (
   id BIGSERIAL PRIMARY KEY,
